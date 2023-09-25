@@ -1,11 +1,10 @@
 using Domain.Recipes;
-using Microsoft.AspNetCore.Identity;
 
 namespace Persistence {
 
     public class Seed {
 
-        public static async Task SeedData(DataContext context) {
+        public static void SeedData(DataContext context) {
 
             if (context.Recipes.Any()) return;
             if (context.RecipeIngredients.Any()) return;
