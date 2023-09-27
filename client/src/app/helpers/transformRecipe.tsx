@@ -8,11 +8,13 @@ export function transformRecipe(recipe: Recipe): Recipe {
     description: recipe.description,
     date: recipe.date,
     category: recipe.category,
-    recipeIngredients: recipe.recipeIngredients.map((ingredient) => ({
-      amount: ingredient.amount,
-      unit: ingredient.unit,
+    cookTime: recipe.cookTime,
+    cuisine: recipe.cuisine,
+    recipeIngredients: recipe.recipeIngredients.map((_ingredient) => ({
+      amount: _ingredient.amount,
+      unit: _ingredient.unit,
       ingredient: {
-        name: ingredient.ingredient.name,
+        name: _ingredient.ingredient.name,
       },
     })),
     instructions: recipe.instructions.map((instruction) => ({

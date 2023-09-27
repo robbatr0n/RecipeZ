@@ -29,6 +29,8 @@ export default observer(function RecipeForm() {
     description: "",
     category: "",
     date: null,
+    cuisine: "",
+    cookTime: "",
     recipeIngredients: [{ amount: 0, unit: "", ingredient: { name: "" } }],
     instructions: [{ step: 1, text: "" }],
   });
@@ -41,7 +43,10 @@ export default observer(function RecipeForm() {
   });
 
   useEffect(() => {
-    if (id) loadRecipe(id).then((recipe) => setRecipe(recipe!));
+    if (id) {
+      console.log(loadRecipe(id));
+      loadRecipe(id).then((recipe) => setRecipe(recipe!));
+    }
   }, [id, loadRecipe]);
 
   const handleFormSubmit = (recipe: Recipe) => {
@@ -49,12 +54,11 @@ export default observer(function RecipeForm() {
       recipe.instructions[i].step = i + 1;
     }
 
-    if (recipe.id.length === 0) {
+    if (!recipe.id) {
       const newRecipe = {
         ...recipe,
         id: uuid(),
       };
-      console.log(newRecipe);
       createRecipe(newRecipe).then(() => navigate(`/recipes/${newRecipe.id}`));
     } else {
       updateRecipe(recipe).then(() => navigate(`/recipes/${recipe.id}`));
@@ -109,6 +113,16 @@ export default observer(function RecipeForm() {
               </Grid.Row>
               <Grid.Row>
                 <Grid.Column>
+                  <TextInput name="cookTime" placeholder="Cooking Time" />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                  <TextInput name="cuisine" placeholder="Cuisine" />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
                   <DateInput
                     name="date"
                     placeholderText="Date"
@@ -132,7 +146,7 @@ export default observer(function RecipeForm() {
                       </Header>
                     </Grid.Column>
                   </Grid.Row>
-                  {values.instructions.map((instruction, index) => (
+                  {values.instructions.map((_instruction, index) => (
                     <Grid.Row key={index}>
                       <Grid.Column width={16}>
                         <TextInput
@@ -180,7 +194,7 @@ export default observer(function RecipeForm() {
                       </Header>
                     </Grid.Column>
                   </Grid.Row>
-                  {values.recipeIngredients.map((ingredient, index) => (
+                  {values.recipeIngredients.map((_ingredient, index) => (
                     <Grid.Row key={index}>
                       <Grid.Column width={16}>
                         <TextInput

@@ -59,6 +59,9 @@ namespace Persistence {
             var recInstructions = new List<Instruction>(instructions);
             goulashRecipe.Instructions = recInstructions;
 
+            goulashRecipe.Cuisine = "Hungarian";
+            goulashRecipe.CookTime = "1hr 20m";
+
             context.Recipes.Add(goulashRecipe);
             context.SaveChanges();
         }

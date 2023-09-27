@@ -40,6 +40,7 @@ export default class RecipeStore {
 
   loadRecipe = async (id: string) => {
     let recipe = this.getRecipe(id);
+    console.log(recipe);
     if (recipe) {
       this.selectedRecipe = recipe;
       return recipe;

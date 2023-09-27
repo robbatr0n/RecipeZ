@@ -27,7 +27,7 @@ export default observer(function RecipeDetailsHeader({ recipe }: Props) {
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: "0" }}>
         <Image
-          src={`/assets/categoryImages/${recipe.category}.jpg`}
+          src="https://twistedsifter.com/wp-content/uploads/2013/08/bread-village-carl-warner.jpg"
           fluid
           style={recipeImageStyle}
         />
@@ -47,15 +47,13 @@ export default observer(function RecipeDetailsHeader({ recipe }: Props) {
         </Segment>
       </Segment>
       <Segment clearing attached="bottom">
-        <Button color="teal">Join Activity</Button>
-        <Button>Cancel attendance</Button>
         <Button
           as={Link}
           to={`/manage/${recipe.id}`}
           color="orange"
           floated="right"
         >
-          Manage Event
+          Edit Recipe
         </Button>
       </Segment>
     </Segment.Group>

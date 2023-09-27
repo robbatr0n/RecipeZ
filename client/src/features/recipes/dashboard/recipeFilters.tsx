@@ -1,5 +1,4 @@
 import { Menu, Header } from "semantic-ui-react";
-import Calendar from "react-calendar";
 
 export default function RecipeFilters() {
   return (
@@ -10,8 +9,6 @@ export default function RecipeFilters() {
         <Menu.Item content="I'm going" />
         <Menu.Item content="I'm hosting" />
       </Menu>
-      <Header icon="calendar" attached color="violet" content="Select date" />
-      <Calendar />
     </>
   );
 }

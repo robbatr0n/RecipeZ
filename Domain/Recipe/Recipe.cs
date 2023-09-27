@@ -7,6 +7,8 @@ namespace Domain.Recipes {
         public string Description { get; set; }
         public string Category { get; set; }
         public DateTime Date { get; set; }
+        public string Cuisine { get; set; }
+        public string CookTime { get; set; }
 
         public virtual List<RecipeIngredient> RecipeIngredients { get; set; }
         public virtual List<Instruction> Instructions { get; set; }

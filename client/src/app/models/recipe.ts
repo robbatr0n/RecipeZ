@@ -4,6 +4,8 @@ export interface Recipe {
   description: string;
   date: Date | null;
   category: string;
+  cookTime: string;
+  cuisine: string;
   recipeIngredients: RecipeIngredient[];
   instructions: RecipeInstruction[];
 }
@@ -27,6 +29,8 @@ export class RecipeFormValues {
   category: string = "";
   description: string = "";
   date: Date | null = null;
+  cookTime: string = "";
+  cuisine: string = "";
   recipeIngredients: RecipeIngredient[] = [];
   instructions: RecipeInstruction[] = [];
 
@@ -37,6 +41,8 @@ export class RecipeFormValues {
       this.category = recipe.category;
       this.description = recipe.description;
       this.date = recipe.date;
+      this.cookTime = recipe.cookTime;
+      this.cuisine = recipe.cuisine;
       this.recipeIngredients = recipe.recipeIngredients;
       this.instructions = recipe.instructions;
     }

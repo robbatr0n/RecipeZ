@@ -12,6 +12,8 @@ namespace Application.Recipes {
             RuleFor(x => x.Category).NotEmpty();
             RuleFor(x => x.RecipeIngredients).NotEmpty();
             RuleFor(x => x.Instructions).NotEmpty();
+            RuleFor(x => x.Cuisine).NotEmpty();
+            RuleFor(x => x.CookTime).NotEmpty();
         }
     }
 }
