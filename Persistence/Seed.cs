@@ -1,15 +1,44 @@
 using Domain.Recipes;
+using Domain.User;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence {
 
     public class Seed {
 
-        public static void SeedData(DataContext context) {
+        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager) {
 
             if (context.Recipes.Any()) return;
             if (context.RecipeIngredients.Any()) return;
             if (context.Ingredients.Any()) return;
             if (context.Instructions.Any()) return;
+
+            if (!userManager.Users.Any()) {
+
+
+
+                var users = new List<AppUser> {
+                    new AppUser {
+                        DisplayName = "Bob",
+                        UserName = "bob",
+                        Email = "bob@test.com"
+                    },
+                    new AppUser {
+                        DisplayName = "Jane",
+                        UserName = "jane",
+                        Email = "jane@test.com"
+                    },
+                    new AppUser {
+                        DisplayName = "Tom",
+                        UserName = "tom",
+                        Email = "tom@test.com"
+                    },
+                };
+
+                foreach (var user in users) {
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                }
+            }
 
             var goulashRecipe = new Recipe {
                 Name = "Hungarian Goulash",
@@ -62,8 +91,8 @@ namespace Persistence {
             goulashRecipe.Cuisine = "Hungarian";
             goulashRecipe.CookTime = "1hr 20m";
 
-            context.Recipes.Add(goulashRecipe);
-            context.SaveChanges();
+            await context.Recipes.AddRangeAsync(goulashRecipe);
+            await context.SaveChangesAsync();
         }
     }
 }
