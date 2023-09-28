@@ -1,21 +1,43 @@
-import { observer } from "mobx-react-lite";
-import { Container } from "semantic-ui-react";
-import { Outlet } from "react-router-dom";
-import ModalContainer from "../common/modals/modalContainer";
-import { ToastContainer } from "react-toastify";
-import Navbar from "./Navbar";
+import { observer } from 'mobx-react-lite';
+import { Container } from 'semantic-ui-react';
+import { Outlet, useLocation } from 'react-router-dom';
+import ModalContainer from '../common/modals/modalContainer';
+import { ToastContainer } from 'react-toastify';
+import Navbar from './Navbar';
+import HomePage from '../../features/home/HomePage';
+import { useStore } from '../stores/store';
+import { useEffect } from 'react';
+import LoadingComponent from './LoadingComponent';
 
 function App() {
-  return (
-    <>
-      <ModalContainer />
-      <ToastContainer position="bottom-right" theme="colored" />
-      <Navbar />
-      <Container style={{ marginTop: "7em" }}>
-        <Outlet />
-      </Container>
-    </>
-  );
+	const location = useLocation();
+	const { commonStore, userStore } = useStore();
+
+	useEffect(() => {
+		if (commonStore.token) {
+			userStore.getUser().finally(() => commonStore.setAppLoaded());
+		} else {
+			commonStore.setAppLoaded();
+		}
+	}, [commonStore, userStore]);
+
+	if (!commonStore.appLoaded) return <LoadingComponent content="Loading app..." />;
+	return (
+		<>
+			<ModalContainer />
+			<ToastContainer position="bottom-right" theme="colored" />
+			{location.pathname === '/' ? (
+				<HomePage />
+			) : (
+				<>
+					<Navbar />
+					<Container style={{ marginTop: '7em' }}>
+						<Outlet />
+					</Container>
+				</>
+			)}
+		</>
+	);
 }
 
 export default observer(App);

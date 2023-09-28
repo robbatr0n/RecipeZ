@@ -7,6 +7,7 @@ import RecipeForm from "../../features/recipes/form/RecipeForm";
 import TestErrors from "../../features/errors/TestError";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
+import LoginForm from "../../features/users/loginForm";
 
 export const routes: RouteObject[] = [
   {
@@ -17,7 +18,7 @@ export const routes: RouteObject[] = [
       { path: "recipes/:id", element: <RecipeDetails /> },
       { path: "createRecipe", element: <RecipeForm key="create" /> },
       { path: "manage/:id", element: <RecipeForm key="manage" /> },
-      // { path: "login", element: <LoginForm /> },
+      { path: "login", element: <LoginForm /> },
       { path: "errors", element: <TestErrors /> },
       { path: "not-found", element: <NotFound /> },
       { path: "server-error", element: <ServerError /> },
