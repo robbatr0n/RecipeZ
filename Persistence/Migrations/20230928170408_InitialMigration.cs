@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityAdded : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,18 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ingredients",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,6 +170,77 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Recipes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Category = table.Column<string>(type: "TEXT", nullable: true),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Cuisine = table.Column<string>(type: "TEXT", nullable: true),
+                    CookTime = table.Column<string>(type: "TEXT", nullable: true),
+                    AuthorId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recipes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Recipes_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Instructions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Step = table.Column<int>(type: "INTEGER", nullable: false),
+                    Text = table.Column<string>(type: "TEXT", nullable: true),
+                    RecipeId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Instructions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Instructions_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RecipeIngredients",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Unit = table.Column<string>(type: "TEXT", nullable: true),
+                    Amount = table.Column<double>(type: "REAL", nullable: false),
+                    RecipeId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IngredientId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecipeIngredients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RecipeIngredients_Ingredients_IngredientId",
+                        column: x => x.IngredientId,
+                        principalTable: "Ingredients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RecipeIngredients_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +277,26 @@ namespace Persistence.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Instructions_RecipeId",
+                table: "Instructions",
+                column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecipeIngredients_IngredientId",
+                table: "RecipeIngredients",
+                column: "IngredientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecipeIngredients_RecipeId",
+                table: "RecipeIngredients",
+                column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recipes_AuthorId",
+                table: "Recipes",
+                column: "AuthorId");
         }
 
         /// <inheritdoc />
@@ -215,7 +318,19 @@ namespace Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Instructions");
+
+            migrationBuilder.DropTable(
+                name: "RecipeIngredients");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Ingredients");
+
+            migrationBuilder.DropTable(
+                name: "Recipes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

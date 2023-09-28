@@ -17,7 +17,6 @@ namespace Persistence {
             builder.Entity<AppUser>()
             .HasMany(e => e.Recipes)
             .WithOne(e => e.Author)
-            .HasPrincipalKey(e => e.Id)
             .HasForeignKey(e => e.AuthorId)
             .IsRequired();
         }
