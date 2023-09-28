@@ -59,6 +59,10 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Category")
                         .HasColumnType("TEXT");
 
@@ -78,6 +82,8 @@ namespace Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Recipes");
                 });
@@ -318,6 +324,17 @@ namespace Persistence.Migrations
                     b.Navigation("Recipe");
                 });
 
+            modelBuilder.Entity("Domain.Recipes.Recipe", b =>
+                {
+                    b.HasOne("Domain.User.AppUser", "Author")
+                        .WithMany("Recipes")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
             modelBuilder.Entity("Domain.Recipes.RecipeIngredient", b =>
                 {
                     b.HasOne("Domain.Recipes.Ingredient", "Ingredient")
@@ -393,6 +410,11 @@ namespace Persistence.Migrations
                     b.Navigation("Instructions");
 
                     b.Navigation("RecipeIngredients");
+                });
+
+            modelBuilder.Entity("Domain.User.AppUser", b =>
+                {
+                    b.Navigation("Recipes");
                 });
 #pragma warning restore 612, 618
         }

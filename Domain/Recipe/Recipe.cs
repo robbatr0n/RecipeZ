@@ -1,3 +1,5 @@
+using Domain.User;
+
 namespace Domain.Recipes {
 
     public class Recipe {
@@ -10,8 +12,11 @@ namespace Domain.Recipes {
         public string Cuisine { get; set; }
         public string CookTime { get; set; }
 
-        public virtual List<RecipeIngredient> RecipeIngredients { get; set; }
-        public virtual List<Instruction> Instructions { get; set; }
+        public string AuthorId { get; set; }
+        public AppUser Author { get; set; }
+
+        public List<RecipeIngredient> RecipeIngredients { get; set; }
+        public List<Instruction> Instructions { get; set; }
 
         public Recipe() {
             RecipeIngredients = new List<RecipeIngredient>();

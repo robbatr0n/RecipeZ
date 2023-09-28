@@ -11,6 +11,17 @@ namespace Persistence {
 
         }
 
+        protected override void OnModelCreating(ModelBuilder builder) {
+            base.OnModelCreating(builder);
+
+            builder.Entity<AppUser>()
+            .HasMany(e => e.Recipes)
+            .WithOne(e => e.Author)
+            .HasPrincipalKey(e => e.Id)
+            .HasForeignKey(e => e.AuthorId)
+            .IsRequired();
+        }
+
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }

@@ -1,3 +1,4 @@
+using Domain.Recipes;
 using Microsoft.AspNetCore.Identity;
 
 namespace Domain.User {
@@ -6,5 +7,11 @@ namespace Domain.User {
 
         public string DisplayName { get; set; }
         public string Bio { get; set; }
+
+        public ICollection<Recipe> Recipes { get; set; }
+
+        public AppUser() {
+            Recipes = new List<Recipe>();
+        }
     }
 }
