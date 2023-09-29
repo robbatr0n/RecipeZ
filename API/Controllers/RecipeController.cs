@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers {
 
-    [AllowAnonymous]
+
     public class RecipesController : BaseApiController {
 
         [HttpGet]
@@ -23,12 +23,14 @@ namespace API.Controllers {
             return HandleResult(await Mediator.Send(new Create.Command { Recipe = recipe }));
         }
 
+        [Authorize(Policy = "IsRecipeAuthor")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateRecipe(Guid id, Recipe recipe) {
             recipe.Id = id;
             return HandleResult(await Mediator.Send(new Update.Command { Recipe = recipe }));
         }
 
+        [Authorize(Policy = "IsRecipeAuthor")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivity(Guid id) {
             return HandleResult(await Mediator.Send(new Delete.Command { ReceipeId = id }));

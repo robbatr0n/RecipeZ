@@ -1,7 +1,9 @@
 using System.Text;
 using API.Services;
 using Domain.User;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
 
@@ -26,7 +28,12 @@ namespace API.Extensions {
                         ValidateAudience = false
                     };
                 });
-
+            services.AddAuthorization(opt => {
+                opt.AddPolicy("IsRecipeAuthor", policy => {
+                    policy.Requirements.Add(new IsAuthorRequirement());
+                });
+            });
+            services.AddTransient<IAuthorizationHandler, IsAuthorRequirementHandler>();
             services.AddScoped<TokenService>();
             return services;
         }

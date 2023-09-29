@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Domain.Recipes {
 
     public class RecipeIngredient {
@@ -7,8 +9,10 @@ namespace Domain.Recipes {
         public double Amount { get; set; }
 
         public Guid RecipeId { get; set; }
+
         public Recipe Recipe { get; set; }
         public Guid IngredientId { get; set; }
+
         public Ingredient Ingredient { get; set; }
     }
 }
