@@ -27,6 +27,7 @@ namespace Application.Recipes {
                 // .Include(a => a.Author)
                 // .Include(a => a.Instructions)
                 // .Include(a => a.RecipeIngredients)
+                 .Include(r => r.RecipeIngredients).ThenInclude(ri => ri.Ingredient)
                 .ProjectTo<RecipeDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

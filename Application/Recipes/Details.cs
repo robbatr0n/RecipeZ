@@ -26,6 +26,7 @@ namespace Application.Recipes {
 
             public async Task<Result<RecipeDTO>> Handle(Query request, CancellationToken cancellationToken) {
                 var recipe = await _context.Recipes
+                .Include(r => r.RecipeIngredients).ThenInclude(ri => ri.Ingredient)
                    .ProjectTo<RecipeDTO>(_mapper.ConfigurationProvider)
                    .FirstOrDefaultAsync(x => x.Id == request.RecipeId);
                 return Result<RecipeDTO>.Success(recipe);

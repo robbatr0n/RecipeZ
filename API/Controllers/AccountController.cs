@@ -60,6 +60,7 @@ namespace API.Controllers {
             return BadRequest(result.Errors);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<UserDTO>> GetCurrentUser() {
             //get user using token and the email claim witiin that
