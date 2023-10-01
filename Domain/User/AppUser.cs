@@ -9,9 +9,11 @@ namespace Domain.User {
         public string Bio { get; set; }
 
         public ICollection<Recipe> Recipes { get; set; }
+        public ICollection<Photo> Photos { get; set; }
 
         public AppUser() {
             Recipes = new List<Recipe>();
+            Photos = new List<Photo>();
         }
     }
 }

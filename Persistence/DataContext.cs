@@ -1,3 +1,4 @@
+using Domain;
 using Domain.Recipes;
 using Domain.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -25,5 +26,6 @@ namespace Persistence {
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Instruction> Instructions { get; set; }
+        public DbSet<Photo> Photos { get; set; }
     }
 }

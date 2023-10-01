@@ -40,7 +40,17 @@ export default observer(function RecipeDetailsHeader({ recipe }: Props) {
 								<Header size="huge" content={recipe.name} style={{ color: 'white' }} />
 								<p>{format(recipe.date!, 'dd MMM yyy')}</p>
 								{
-									<Popup hoverable key={recipe.author.username} trigger={<p>{recipe.author.username}</p>}>
+									<Popup
+										hoverable
+										key={recipe.author.username}
+										trigger={
+											<p style={{ fontSize: '1.1em', paddingTop: '.5em' }}>
+												Written by{' '}
+												<span style={{ color: 'teal', textDecoration: 'underline', cursor: 'pointer' }}>
+													{recipe.author.username}
+												</span>
+											</p>
+										}>
 										<PopupContent>
 											<ProfileCard profile={recipe.author} />
 										</PopupContent>

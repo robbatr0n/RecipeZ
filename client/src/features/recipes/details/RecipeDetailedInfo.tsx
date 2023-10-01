@@ -21,7 +21,7 @@ export default observer(function ActivityDetailedInfo({ recipe }: Props) {
 					</Segment>
 					<Segment textAlign="center">
 						<Grid.Column style={{ marginBottom: '.5em' }} width={1}>
-							<Icon name="food" size="large" color="pink" />
+							<Icon name="time" size="large" color="pink" />
 						</Grid.Column>
 						<Grid.Column width={15}>
 							<span>{recipe.cookTime}</span>
@@ -29,7 +29,7 @@ export default observer(function ActivityDetailedInfo({ recipe }: Props) {
 					</Segment>
 					<Segment textAlign="center">
 						<Grid.Column style={{ marginBottom: '.5em' }} width={1}>
-							<Icon name="food" size="large" color="pink" />
+							<Icon name="world" size="large" color="pink" />
 						</Grid.Column>
 						<Grid.Column width={15}>
 							<span>{recipe.cuisine}</span>
@@ -68,9 +68,12 @@ export default observer(function ActivityDetailedInfo({ recipe }: Props) {
 						</Grid.Column>
 						<Grid.Column width={11}>
 							<h2 style={{ paddingBottom: '.5em' }}>Instructions</h2>
-							<List relaxed="very" ordered>
+							<List relaxed="very">
 								{recipe.instructions.map((instruction, index) => (
-									<List.Item>{instruction.text}</List.Item>
+									<List.Item>
+										{instruction.step}
+										{'. '} {instruction.text}
+									</List.Item>
 								))}
 							</List>
 						</Grid.Column>
