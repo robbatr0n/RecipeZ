@@ -4,7 +4,6 @@ import { Button, Container, Header, Segment, Image } from 'semantic-ui-react';
 import { useStore } from '../../app/stores/store';
 import LoginForm from '../users/loginForm';
 import RegisterForm from '../users/registerForm';
-//import RegsiterForm from "../users/RegsiterForm";
 
 export default observer(function HomePage() {
 	const { userStore, modalStore } = useStore();
@@ -13,7 +12,7 @@ export default observer(function HomePage() {
 			<Container text>
 				<Header as="h1" inverted>
 					<Image size="massive" src="/assets/logo.png" alt="logo" style={{ marginBottom: 12 }} />
-					Reactivities
+					RecipeZ
 				</Header>
 				{userStore.isLoggedIn ? (
 					<>

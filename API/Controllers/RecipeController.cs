@@ -32,7 +32,7 @@ namespace API.Controllers {
 
         [Authorize(Policy = "IsRecipeAuthor")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActivity(Guid id) {
+        public async Task<IActionResult> DeleteRecipe(Guid id) {
             return HandleResult(await Mediator.Send(new Delete.Command { ReceipeId = id }));
         }
     }

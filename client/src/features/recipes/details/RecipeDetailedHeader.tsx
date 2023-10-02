@@ -1,4 +1,4 @@
-import { Button, Header, Item, Segment, Image, Popup, PopupContent } from 'semantic-ui-react';
+import { Button, Header, Item, Segment, Image, Popup, PopupContent, Grid } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
@@ -39,23 +39,6 @@ export default observer(function RecipeDetailsHeader({ recipe }: Props) {
 							<Item.Content>
 								<Header size="huge" content={recipe.name} style={{ color: 'white' }} />
 								<p>{format(recipe.date!, 'dd MMM yyy')}</p>
-								{
-									<Popup
-										hoverable
-										key={recipe.author.username}
-										trigger={
-											<p style={{ fontSize: '1.1em', paddingTop: '.5em' }}>
-												Written by{' '}
-												<span style={{ color: 'teal', textDecoration: 'underline', cursor: 'pointer' }}>
-													{recipe.author.username}
-												</span>
-											</p>
-										}>
-										<PopupContent>
-											<ProfileCard profile={recipe.author} />
-										</PopupContent>
-									</Popup>
-								}
 							</Item.Content>
 						</Item>
 					</Item.Group>
@@ -63,9 +46,34 @@ export default observer(function RecipeDetailsHeader({ recipe }: Props) {
 			</Segment>
 			{recipe.author.username === store.userStore.getLoggedInUser()?.username && (
 				<Segment clearing attached="bottom">
-					<Button as={Link} to={`/manage/${recipe.id}`} color="orange" floated="right">
-						Edit Recipe
-					</Button>
+					<Grid>
+						<Grid.Column width={12}>
+							{
+								<Popup
+									hoverable
+									key={recipe.author.username}
+									trigger={
+										<p style={{ fontSize: '1.1em', paddingTop: '.5em' }}>
+											Written by{' '}
+											<Link to={`/profiles/${recipe.authorUsername}`}>
+												<span style={{ color: 'teal', textDecoration: 'underline', cursor: 'pointer' }}>
+													{recipe.author.username}
+												</span>
+											</Link>
+										</p>
+									}>
+									<PopupContent>
+										<ProfileCard profile={recipe.author} />
+									</PopupContent>
+								</Popup>
+							}
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<Button as={Link} to={`/manage/${recipe.id}`} color="orange" floated="right">
+								Edit Recipe
+							</Button>
+						</Grid.Column>
+					</Grid>
 				</Segment>
 			)}
 		</Segment.Group>

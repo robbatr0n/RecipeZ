@@ -37,7 +37,7 @@ namespace Application.Recipes {
                 if (recipe == null) return null;
                 _mapper.Map(request.Recipe, recipe);
                 var result = await _context.SaveChangesAsync() > 0;
-                if (!result) return Result<Unit>.Failure("Failed to update activity");
+                if (!result) return Result<Unit>.Failure("Failed to update recipe");
                 return Result<Unit>.Success(Unit.Value);
             }
         }

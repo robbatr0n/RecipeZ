@@ -17,10 +17,12 @@ namespace Domain.Recipes {
 
         public List<RecipeIngredient> RecipeIngredients { get; set; }
         public List<Instruction> Instructions { get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
         public Recipe() {
             RecipeIngredients = new List<RecipeIngredient>();
             Instructions = new List<Instruction>();
+            Comments = new List<Comment>();
         }
     }
 }

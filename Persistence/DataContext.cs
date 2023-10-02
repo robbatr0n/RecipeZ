@@ -20,6 +20,11 @@ namespace Persistence {
             .WithOne(e => e.Author)
             .HasForeignKey(e => e.AuthorId)
             .IsRequired();
+
+            builder.Entity<Comment>()
+            .HasOne(r => r.Recipe)
+            .WithMany(c => c.Comments)
+            .OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<Recipe> Recipes { get; set; }
@@ -27,5 +32,6 @@ namespace Persistence {
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Instruction> Instructions { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }
