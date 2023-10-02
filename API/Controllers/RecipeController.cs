@@ -1,3 +1,4 @@
+using Application.Core;
 using Application.Recipes;
 using Domain.Recipes;
 using Microsoft.AspNetCore.Authorization;
@@ -9,8 +10,8 @@ namespace API.Controllers {
     public class RecipesController : BaseApiController {
 
         [HttpGet]
-        public async Task<IActionResult> GetRecipes() {
-            return HandleResult(await Mediator.Send(new List.Query()));
+        public async Task<IActionResult> GetRecipes([FromQuery] PagingParams _params) {
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = _params }));
         }
 
         [HttpGet("{id}")]

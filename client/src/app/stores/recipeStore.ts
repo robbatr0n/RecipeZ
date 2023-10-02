@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { transformRecipe } from '../helpers/transformRecipe';
 import { Recipe } from '../models/recipe';
 import agent from '../api/agent';
-import { store } from './store';
+import { Pagination, PagingParams } from '../models/pagination';
 
 export default class RecipeStore {
 	recipeRegistry = new Map<string, Recipe>();
@@ -12,9 +12,22 @@ export default class RecipeStore {
 	editMode = false;
 	loading = false;
 	loadingInitial = false;
+	pagination: Pagination | null = null;
+	pagingParams = new PagingParams();
 
 	constructor() {
 		makeAutoObservable(this);
+	}
+
+	setPagingParams = (pagingParams: PagingParams) => {
+		this.pagingParams = pagingParams;
+	};
+
+	get axiosParams() {
+		const params = new URLSearchParams();
+		params.append('pageNumber', this.pagingParams.pageNumber.toString());
+		params.append('pageSize', this.pagingParams.pageSize.toString());
+		return params;
 	}
 
 	get recipesByDate() {
@@ -24,17 +37,22 @@ export default class RecipeStore {
 	loadRecipes = async () => {
 		this.setLoadingInitial(true);
 		try {
-			const recipes = await agent.Recipes.list();
+			const result = await agent.Recipes.list(this.axiosParams);
 			runInAction(() => {
-				recipes.forEach((recipe) => {
+				result.data.forEach((recipe) => {
 					this.setRecipe(recipe);
 				});
 			});
+			this.setPagination(result.pagination);
 			this.setLoadingInitial(false);
 		} catch (error) {
 			this.setLoadingInitial(false);
 			console.log(error);
 		}
+	};
+
+	setPagination = (pagination: Pagination) => {
+		this.pagination = pagination;
 	};
 
 	loadRecipe = async (id: string) => {

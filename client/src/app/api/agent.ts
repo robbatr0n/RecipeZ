@@ -6,6 +6,7 @@ import { router } from '../router/routes';
 import { store } from '../stores/store';
 import { User, UserFormValues } from '../models/user';
 import { Profile } from '../models/profile';
+import { PaginatedResult } from '../models/pagination';
 
 const sleep = (delay: number) => {
 	return new Promise((resolve) => {
@@ -26,6 +27,11 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
 	async (response) => {
 		await sleep(1000);
+		const pagination = response.headers['pagination'];
+		if (pagination) {
+			response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+			return response as AxiosResponse<PaginatedResult<unknown>>;
+		}
 		return response;
 	},
 	(error: AxiosError) => {
@@ -75,7 +81,7 @@ const requests = {
 };
 
 const Recipes = {
-	list: () => requests.get<Recipe[]>('/recipes'),
+	list: (params: URLSearchParams) => axios.get<PaginatedResult<Recipe[]>>('/recipes', { params }).then(responseBody),
 	details: (id: string) => requests.get<Recipe>(`/recipes/${id}`),
 	create: (recipe: Recipe) => axios.post<Recipe>(`/recipes/`, recipe),
 	update: (recipe: Recipe) => axios.put<Recipe>(`/recipes/${recipe.id}`, recipe),
