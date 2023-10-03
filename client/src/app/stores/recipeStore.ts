@@ -6,6 +6,7 @@ import { Recipe } from '../models/recipe';
 import agent from '../api/agent';
 import { Pagination, PagingParams } from '../models/pagination';
 import { Profile } from '../models/profile';
+import { capitalizeFirstLetter } from '../helpers/functions';
 
 export default class RecipeStore {
 	recipeRegistry = new Map<string, Recipe>();
@@ -138,6 +139,7 @@ export default class RecipeStore {
 		const profile = new Profile(user!);
 		this.loading = true;
 		recipe.id = uuid();
+		recipe.category = capitalizeFirstLetter(recipe.category);
 		const transformedRecipe = transformRecipe(recipe);
 		transformedRecipe.author = profile;
 

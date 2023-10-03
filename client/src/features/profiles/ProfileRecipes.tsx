@@ -22,13 +22,13 @@ export default observer(function ProfileActivities() {
 		<Tab.Pane loading={loadingRecipes}>
 			<Grid>
 				<Grid.Column width={16}>
-					<Header floated="left" icon="food" content={'Activities'} />
+					<Header floated="left" icon="food" content={'Recipes'} />
 				</Grid.Column>
 				<Grid.Column width={16}>
 					<br />
 					<Card.Group itemsPerRow={4}>
 						{userRecipes.map((recipe: UserRecipe) => (
-							<Card as={Link} to={`/activities/${recipe.id}`} key={recipe.id}>
+							<Card as={Link} to={`/recipes/${recipe.id}`} key={recipe.id}>
 								{/* <Image
 									src={`/assets/categoryImages/${recipe.category}.jpg`}
 									style={{ minHeight: 100, objectFit: 'cover' }}
