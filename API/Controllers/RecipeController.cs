@@ -10,7 +10,7 @@ namespace API.Controllers {
     public class RecipesController : BaseApiController {
 
         [HttpGet]
-        public async Task<IActionResult> GetRecipes([FromQuery] PagingParams _params) {
+        public async Task<IActionResult> GetRecipes([FromQuery] RecipeParams _params) {
             return HandlePagedResult(await Mediator.Send(new List.Query { Params = _params }));
         }
 

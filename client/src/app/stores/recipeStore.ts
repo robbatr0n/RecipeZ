@@ -1,6 +1,6 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, reaction, runInAction } from 'mobx';
 import { v4 as uuid } from 'uuid';
-
+import { store } from './store';
 import { transformRecipe } from '../helpers/transformRecipe';
 import { Recipe } from '../models/recipe';
 import agent from '../api/agent';
@@ -14,19 +14,61 @@ export default class RecipeStore {
 	loadingInitial = false;
 	pagination: Pagination | null = null;
 	pagingParams = new PagingParams();
+	predicate = new Map().set('all', true);
 
 	constructor() {
 		makeAutoObservable(this);
+		reaction(
+			() => this.predicate.keys(),
+			() => {
+				this.pagingParams = new PagingParams();
+				this.recipeRegistry.clear();
+				this.loadRecipes();
+			}
+		);
 	}
 
 	setPagingParams = (pagingParams: PagingParams) => {
 		this.pagingParams = pagingParams;
 	};
 
+	setPredicate = (predicate: string, value: string | Date) => {
+		const resetPredicate = () => {
+			this.predicate.forEach((value, key) => {
+				this.predicate.delete(key);
+			});
+		};
+		switch (predicate) {
+			case 'all':
+				resetPredicate();
+				this.predicate.set('all', true);
+				break;
+			case 'isBreakfast':
+				resetPredicate();
+				this.predicate.set('isBreakfast', true);
+				break;
+			case 'isLunch':
+				resetPredicate();
+				this.predicate.set('isLunch', true);
+				break;
+			case 'isDinner':
+				resetPredicate();
+				this.predicate.set('isDinner', true);
+				break;
+		}
+	};
+
 	get axiosParams() {
 		const params = new URLSearchParams();
 		params.append('pageNumber', this.pagingParams.pageNumber.toString());
 		params.append('pageSize', this.pagingParams.pageSize.toString());
+		this.predicate.forEach((value, key) => {
+			if (key === 'startDate') {
+				params.append(key, (value as Date).toISOString());
+			} else {
+				params.append(key, value);
+			}
+		});
 		return params;
 	}
 

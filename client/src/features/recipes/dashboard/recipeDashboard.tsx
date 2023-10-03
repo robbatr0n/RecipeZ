@@ -7,6 +7,7 @@ import RecipeList from './recipeList';
 import RecipeFilters from './recipeFilters';
 import { PagingParams } from '../../../app/models/pagination';
 import InfiniteScroll from 'react-infinite-scroller';
+import RecipeListItemPlaceholder from './recipeListItemPlaceholder';
 
 export default observer(function RecipeDashboard() {
 	const { recipeStore } = useStore();
@@ -23,18 +24,23 @@ export default observer(function RecipeDashboard() {
 		if (recipeRegistry.size <= 1) loadRecipes();
 	}, [loadRecipes, recipeRegistry.size]);
 
-	if (recipeStore.loadingInitial && !loadingNext) return <LoadingComponent content="Loading recipes..." />;
-
 	return (
 		<Grid>
 			<Grid.Column width="10">
-				<InfiniteScroll
-					pageStart={0}
-					loadMore={handleGetNext}
-					hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
-					initialLoad={false}>
-					<RecipeList />
-				</InfiniteScroll>
+				{recipeStore.loadingInitial && !loadingNext ? (
+					<>
+						<RecipeListItemPlaceholder />
+						<RecipeListItemPlaceholder />
+					</>
+				) : (
+					<InfiniteScroll
+						pageStart={0}
+						loadMore={handleGetNext}
+						hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+						initialLoad={false}>
+						<RecipeList />
+					</InfiniteScroll>
+				)}
 			</Grid.Column>
 			<Grid.Column width="6">
 				<RecipeFilters />
