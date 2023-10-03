@@ -15,9 +15,10 @@ import TextInput from '../../../app/common/form/TextInput';
 import DateInput from '../../../app/common/form/DateInput';
 import { useStore } from '../../../app/stores/store';
 import { Recipe } from '../../../app/models/recipe';
+import UserStore from '../../../app/stores/userStore';
 
 export default observer(function RecipeForm() {
-	const { recipeStore } = useStore();
+	const { recipeStore, userStore } = useStore();
 	const { createRecipe, updateRecipe, loading, loadRecipe, loadingInitial } = recipeStore;
 	const { id } = useParams();
 	const navigate = useNavigate();
@@ -57,6 +58,7 @@ export default observer(function RecipeForm() {
 				...recipe,
 				id: uuid(),
 			};
+			console.log(newRecipe);
 			createRecipe(newRecipe).then(() => navigate(`/recipes/${newRecipe.id}`));
 		} else {
 			updateRecipe(recipe).then(() => navigate(`/recipes/${recipe.id}`));
@@ -72,7 +74,6 @@ export default observer(function RecipeForm() {
 				initialValues={recipe}
 				validationSchema={validationSchema}
 				onSubmit={(values) => {
-					console.log(values); // Log the form values here
 					handleFormSubmit(values);
 				}}>
 				{({ handleSubmit, values, handleChange }) => (

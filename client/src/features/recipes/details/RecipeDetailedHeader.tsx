@@ -44,20 +44,20 @@ export default observer(function RecipeDetailsHeader({ recipe }: Props) {
 					</Item.Group>
 				</Segment>
 			</Segment>
-			{recipe.author.username === store.userStore.getLoggedInUser()?.username && (
+			{recipe.author?.username === store.userStore.getLoggedInUser()?.username && (
 				<Segment clearing attached="bottom">
 					<Grid>
 						<Grid.Column width={12}>
 							{
 								<Popup
 									hoverable
-									key={recipe.author.username}
+									key={recipe.author?.username}
 									trigger={
 										<p style={{ fontSize: '1.1em', paddingTop: '.5em' }}>
 											Written by{' '}
-											<Link to={`/profiles/${recipe.author.username}`}>
+											<Link to={`/profiles/${recipe.author?.username}`}>
 												<span style={{ color: 'teal', textDecoration: 'underline', cursor: 'pointer' }}>
-													{recipe.author.username}
+													{recipe.author?.username}
 												</span>
 											</Link>
 										</p>

@@ -8,7 +8,7 @@ export interface Recipe {
 	category: string;
 	cookTime: string;
 	cuisine: string;
-	author: Profile;
+	author?: Profile;
 	authorUsername?: string;
 	isAuthor?: boolean;
 	authorId?: string;

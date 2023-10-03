@@ -5,6 +5,7 @@ import { transformRecipe } from '../helpers/transformRecipe';
 import { Recipe } from '../models/recipe';
 import agent from '../api/agent';
 import { Pagination, PagingParams } from '../models/pagination';
+import { Profile } from '../models/profile';
 
 export default class RecipeStore {
 	recipeRegistry = new Map<string, Recipe>();
@@ -133,9 +134,12 @@ export default class RecipeStore {
 	};
 
 	createRecipe = async (recipe: Recipe) => {
+		const user = store.userStore!.user;
+		const profile = new Profile(user!);
 		this.loading = true;
 		recipe.id = uuid();
 		const transformedRecipe = transformRecipe(recipe);
+		transformedRecipe.author = profile;
 
 		try {
 			await agent.Recipes.create(transformedRecipe);
