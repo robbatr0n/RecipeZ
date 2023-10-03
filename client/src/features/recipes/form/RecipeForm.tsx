@@ -15,10 +15,9 @@ import TextInput from '../../../app/common/form/TextInput';
 import DateInput from '../../../app/common/form/DateInput';
 import { useStore } from '../../../app/stores/store';
 import { Recipe } from '../../../app/models/recipe';
-import UserStore from '../../../app/stores/userStore';
 
 export default observer(function RecipeForm() {
-	const { recipeStore, userStore } = useStore();
+	const { recipeStore } = useStore();
 	const { createRecipe, updateRecipe, loading, loadRecipe, loadingInitial } = recipeStore;
 	const { id } = useParams();
 	const navigate = useNavigate();
@@ -33,6 +32,7 @@ export default observer(function RecipeForm() {
 		cookTime: '',
 		recipeIngredients: [{ amount: 0, unit: '', ingredient: { name: '' } }],
 		instructions: [{ step: 1, text: '' }],
+		image: '',
 	});
 
 	const validationSchema = Yup.object({
@@ -117,6 +117,11 @@ export default observer(function RecipeForm() {
 									<DateInput name="date" placeholderText="Date" timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" />
 								</Grid.Column>
 							</Grid.Row>
+							<Grid.Row>
+								<Grid.Column>
+									<TextInput name="image" placeholder="Image URL" />
+								</Grid.Column>
+							</Grid.Row>
 						</Grid>
 
 						<FieldArray name="instructions">
@@ -139,7 +144,6 @@ export default observer(function RecipeForm() {
 													placeholder="Instruction"
 													icon={<Icon name="delete" onClick={() => remove(index)} />}
 													onChange={(e) => {
-														console.log(e.target.name, e.target.value); // Log the field name and value
 														handleChange(e);
 													}}
 												/>
@@ -174,7 +178,6 @@ export default observer(function RecipeForm() {
 											<Grid.Column width={16}>
 												<TextInput
 													onChange={(e) => {
-														console.log(e.target.name, e.target.value); // Log the field name and value
 														handleChange(e);
 													}}
 													name={`recipeIngredients[${index}].ingredient.name`}

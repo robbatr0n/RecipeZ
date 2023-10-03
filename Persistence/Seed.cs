@@ -46,7 +46,8 @@ namespace Persistence {
                     Date = DateTime.UtcNow.AddMonths(-1),
                     Category = "Dinner",
                     Author = users.First(),
-                    AuthorId = users.First().Id
+                    AuthorId = users.First().Id,
+                    Image = "https://hips.hearstapps.com/del.h-cdn.co/assets/17/37/2048x1024/landscape-1505333248-goulash-delish-1.jpg?resize=1200:*"
                 };
 
                 var ingredients = new Ingredient[] {

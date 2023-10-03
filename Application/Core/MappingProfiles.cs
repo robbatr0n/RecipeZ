@@ -38,6 +38,7 @@ namespace Application.Core {
             .ForMember(d => d.Title, o => o.MapFrom(s => s.Name))
             .ForMember(d => d.Category, o => o.MapFrom(s => s.Category))
             .ForMember(d => d.Cuisine, o => o.MapFrom(s => s.Cuisine))
+            .ForMember(d => d.Image, o => o.MapFrom(s => s.Image))
             .ForMember(d => d.Date, o => o.MapFrom(s => s.Date));
         }
     }

@@ -8,6 +8,7 @@ namespace Application.Profiles {
         public string Category { get; set; }
         public string Cuisine { get; set; }
         public DateTime Date { get; set; }
+        public string Image { get; set; }
         [JsonIgnore]
         public string AuthorUsername { get; set; }
     }

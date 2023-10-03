@@ -25,14 +25,11 @@ interface Props {
 }
 
 export default observer(function RecipeDetailsHeader({ recipe }: Props) {
+	console.log(recipe.image);
 	return (
 		<Segment.Group>
 			<Segment basic attached="top" style={{ padding: '0' }}>
-				<Image
-					src="https://twistedsifter.com/wp-content/uploads/2013/08/bread-village-carl-warner.jpg"
-					fluid
-					style={recipeImageStyle}
-				/>
+				<Image src={recipe.image} fluid style={recipeImageStyle} />
 				<Segment style={recipeImageTextStyle} basic>
 					<Item.Group>
 						<Item>
@@ -63,7 +60,7 @@ export default observer(function RecipeDetailsHeader({ recipe }: Props) {
 										</p>
 									}>
 									<PopupContent>
-										<ProfileCard profile={recipe.author} />
+										<ProfileCard profile={recipe.author!} />
 									</PopupContent>
 								</Popup>
 							}

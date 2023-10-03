@@ -12,6 +12,8 @@ namespace Domain.Recipes {
         public string Cuisine { get; set; }
         public string CookTime { get; set; }
 
+        public string Image { get; set; }
+
         public string AuthorId { get; set; }
         public AppUser Author { get; set; }
 

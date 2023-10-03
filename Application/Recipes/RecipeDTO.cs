@@ -12,6 +12,7 @@ namespace Application.Recipes {
         public DateTime Date { get; set; }
         public string Cuisine { get; set; }
         public string CookTime { get; set; }
+        public string Image { get; set; }
 
         public string AuthorId { get; set; }
         public Profile Author { get; set; }

@@ -55,7 +55,7 @@ export default observer(function RecipeDetailedInfo({ recipe }: Props) {
 									</Table.Row>
 								</Table.Header>
 								<Table.Body>
-									{recipe.recipeIngredients.map((ingredient, index) => (
+									{recipe.recipeIngredients.map((ingredient) => (
 										<Table.Row>
 											<Table.Cell>{ingredient.ingredient.name}</Table.Cell>
 											<Table.Cell>
@@ -69,7 +69,7 @@ export default observer(function RecipeDetailedInfo({ recipe }: Props) {
 						<Grid.Column width={11}>
 							<h2 style={{ paddingBottom: '.5em' }}>Instructions</h2>
 							<List relaxed="very">
-								{recipe.instructions.map((instruction, index) => (
+								{recipe.instructions.map((instruction) => (
 									<List.Item>
 										{instruction.step}
 										{'. '} {instruction.text}
