@@ -32,6 +32,13 @@ namespace Application.Core {
             .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.Author.DisplayName))
             .ForMember(d => d.Username, o => o.MapFrom(s => s.Author.UserName))
             .ForMember(d => d.Image, o => o.MapFrom(s => s.Author.Photos.FirstOrDefault(x => x.IsMain).Url));
+
+            CreateMap<Recipe, Profiles.UserRecipeDTO>()
+            .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+            .ForMember(d => d.Title, o => o.MapFrom(s => s.Name))
+            .ForMember(d => d.Category, o => o.MapFrom(s => s.Category))
+            .ForMember(d => d.Cuisine, o => o.MapFrom(s => s.Cuisine))
+            .ForMember(d => d.Date, o => o.MapFrom(s => s.Date));
         }
     }
 }

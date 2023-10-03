@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export interface Profile {
+export interface IProfile {
 	username: string;
 	displayName: string;
 	image?: string;
@@ -8,7 +8,10 @@ export interface Profile {
 	photos?: Photo[];
 }
 
-export class Profile implements Profile {
+export class Profile implements IProfile {
+	username: string;
+	displayName: string;
+	image: string | undefined;
 	constructor(user: User) {
 		this.username = user.username;
 		this.displayName = user.displayName;
@@ -20,4 +23,12 @@ export interface Photo {
 	id: string;
 	url: string;
 	isMain: boolean;
+}
+
+export interface UserRecipe {
+	id: string;
+	title: string;
+	category: string;
+	cuisine: string;
+	date: Date;
 }

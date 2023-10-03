@@ -5,7 +5,7 @@ import { Recipe } from '../models/recipe';
 import { router } from '../router/routes';
 import { store } from '../stores/store';
 import { User, UserFormValues } from '../models/user';
-import { Profile } from '../models/profile';
+import { Profile, UserRecipe } from '../models/profile';
 import { PaginatedResult } from '../models/pagination';
 
 const sleep = (delay: number) => {
@@ -96,6 +96,8 @@ const Account = {
 
 const Profiles = {
 	get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
+	listRecipes: (username: string, predicate: string) =>
+		requests.get<UserRecipe[]>(`profiles/${username}/recipes?predicate=${predicate}`),
 };
 
 const agent = {

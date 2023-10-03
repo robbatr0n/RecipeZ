@@ -55,7 +55,7 @@ export default observer(function RecipeDetailsHeader({ recipe }: Props) {
 									trigger={
 										<p style={{ fontSize: '1.1em', paddingTop: '.5em' }}>
 											Written by{' '}
-											<Link to={`/profiles/${recipe.authorUsername}`}>
+											<Link to={`/profiles/${recipe.author.username}`}>
 												<span style={{ color: 'teal', textDecoration: 'underline', cursor: 'pointer' }}>
 													{recipe.author.username}
 												</span>

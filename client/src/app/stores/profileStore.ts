@@ -1,4 +1,4 @@
-import { Profile } from '../models/profile';
+import { Profile, UserRecipe } from '../models/profile';
 import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { toast } from 'react-toastify';
@@ -8,6 +8,8 @@ export default class ProfileStore {
 	loadingProfile = false;
 	uploading = false;
 	loading = false;
+	userRecipes: UserRecipe[] = [];
+	loadingRecipes = false;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -25,6 +27,22 @@ export default class ProfileStore {
 			toast.error('Problem loading profile');
 			runInAction(() => {
 				this.loadingProfile = false;
+			});
+		}
+	};
+
+	loadUserRecipes = async (username: string, predicate?: string) => {
+		this.loadingRecipes = true;
+		try {
+			const recipes = await agent.Profiles.listRecipes(username, predicate!);
+			runInAction(() => {
+				this.userRecipes = recipes;
+				this.loadingRecipes = false;
+			});
+		} catch (error) {
+			console.log(error);
+			runInAction(() => {
+				this.loadingRecipes = false;
 			});
 		}
 	};

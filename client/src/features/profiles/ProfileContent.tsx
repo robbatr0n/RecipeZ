@@ -16,9 +16,7 @@ export default observer(function ProfileContent({ profile }: Props) {
 					<p>{profile.bio}</p>
 				</Segment>
 			</Segment.Group>
-			<Segment.Group className="white-bg" horizontal>
-				<Segment textAlign="center">recipes</Segment>
-			</Segment.Group>
+			<Segment.Group className="white-bg" horizontal></Segment.Group>
 		</SegmentGroup>
 	);
 });

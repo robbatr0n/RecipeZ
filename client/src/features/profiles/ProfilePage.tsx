@@ -6,6 +6,7 @@ import { Grid } from 'semantic-ui-react';
 import ProfileHeader from './ProfileHeader';
 import ProfileContent from './ProfileContent';
 import { observer } from 'mobx-react-lite';
+import ProfileRecipes from './ProfileRecipes';
 
 export default observer(function ProfilePage() {
 	const { username } = useParams();
@@ -25,6 +26,7 @@ export default observer(function ProfilePage() {
 			<Grid.Column width="16">
 				<ProfileHeader profile={profile} />
 				<ProfileContent profile={profile} />
+				<ProfileRecipes />
 			</Grid.Column>
 		</Grid>
 	);
